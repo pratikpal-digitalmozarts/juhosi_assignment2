@@ -103,7 +103,7 @@ app.post('/dashboard', (req, res) => {
                 result = result2;
               let val = ' {"id":"Id","orderListId":"OrderListID","productId":"productId","package":"package","request_weight":"request_weight","result_weight":"result_weight","orderDate":"orderDate","price":"price","order_id":"order_id", "count" : "Count", "requests": "Request",  "user_id" : "User Id", "create_time" :"Creation Time", "name" : "Name" }, ';
               let orderIDbtn = JSON.stringify(result);
-              let newString = orderIDbtn.slice(0, 2) + val + orderIDbtn.slice(2);
+              let newString = orderIDbtn.slice(0, 1) + val + orderIDbtn.slice(1);
               console.log("This is new String: ",newString);
               writeToGoogleSpreadsheet(JSON.parse(newString));
               console.log("Result 2",result2);
@@ -116,7 +116,7 @@ app.post('/dashboard', (req, res) => {
         else{
             let val = ' {"id":"Id","orderListId":"OrderListID","productId":"productId","package":"package","request_weight":"request_weight","result_weight":"result_weight","orderDate":"orderDate","price":"price","order_id":"order_id", "count" : "Count", "requests": "Request",  "user_id" : "User Id", "create_time" :"Creation Time", "name" : "Name" }, ';
               let orderIDbtn = JSON.stringify(result);
-              let newString = orderIDbtn.slice(0, 2) + val + orderIDbtn.slice(2);
+              let newString = orderIDbtn.slice(0, 1) + val + orderIDbtn.slice(1);
               console.log("This is new String: ",newString);
               writeToGoogleSpreadsheet(JSON.parse(newString));
             res.render('dashboard', { result, ownerName });
