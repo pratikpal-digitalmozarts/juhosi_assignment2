@@ -42,7 +42,12 @@
         <tr>
           <td><%= user.orderDate.toLocaleDateString('en-US') %></td>
           <td><%= user.user_id %></td>
-          <td><%= user.name %></td>
+          <% if (typeof text !== 'undefined') { %>
+            <td>ownerName[0]["name"]</td>
+          <% } %>
+          <% else { %>
+            <td><%= user.name %></td>
+          <% } %>
           <td><%= user.package %></td>
           <td><%= user.request_weight %></td>
           <td><%= user.result_weight %></td>
