@@ -181,7 +181,9 @@ app.post("/gotoexcel", (req, res) =>{
 
     writeToGoogleSpreadsheet(JSON.parse(newString));
     let redirectUrl = 'https://docs.google.com/spreadsheets/d/1tsEgKRtHfZaYo13uoWNF89HIvL14Pt-01X1R69QGVMc';
-    res.redirect(redirectUrl);
+    // res.redirect(redirectUrl);
+    const linkHtml = `<a href="${redirectUrl}" target="_blank">Open Website in New Tab</a>`;
+    res.send(linkHtml);
     let text = [ {id: "Redirected to spreedsheet"} ]
     res.render("home", { text });
 })
