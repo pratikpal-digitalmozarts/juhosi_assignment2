@@ -101,7 +101,11 @@ app.post('/dashboard', (req, res) => {
             pool.query( mergeQuery , (err2, result2) => {
                 console.log("Error...... 2",err2);
                 result = result2;
-                console.log("Result 2",result2);
+              let val = ' {"id":"Id","orderListId":"OrderListID","productId":"productId","package":"package","request_weight":"request_weight","result_weight":"result_weight","orderDate":"orderDate","price":"price","order_id":"order_id", "count" : "Count", "requests": "Request",  "user_id" : "User Id", "create_time" :"Creation Time", "name" : "Name" }, ';
+              let orderIDbtn = JSON.stringify(result);
+              let newString = orderIDbtn.slice(0, 2) + val + orderIDbtn.slice(2);
+              writeToGoogleSpreadsheet(JSON.parse(newString));
+              console.log("Result 2",result2);
                 console.log("result 1",result);
                 res.render('dashboard', { result });
                 return;
@@ -109,6 +113,10 @@ app.post('/dashboard', (req, res) => {
         }
         // console.log("The result: ",result);
         else{
+            let val = ' {"id":"Id","orderListId":"OrderListID","productId":"productId","package":"package","request_weight":"request_weight","result_weight":"result_weight","orderDate":"orderDate","price":"price","order_id":"order_id", "count" : "Count", "requests": "Request",  "user_id" : "User Id", "create_time" :"Creation Time", "name" : "Name" }, ';
+              let orderIDbtn = JSON.stringify(result);
+              let newString = orderIDbtn.slice(0, 2) + val + orderIDbtn.slice(2);
+              writeToGoogleSpreadsheet(JSON.parse(newString));
             res.render('dashboard', { result, ownerName });
         }
 
@@ -171,22 +179,22 @@ app.post('/submit', (req, res) =>{
     // res.render('customer', { result });
 });
 
-app.post("/gotoexcel", (req, res) =>{
-    console.log("Goto excel button",req.body);
-    const { orderIDbtn } = req.body;
-    let val = ' {"id":"Id","orderListId":"OrderListID","productId":"productId","package":"package","request_weight":"request_weight","result_weight":"result_weight","orderDate":"orderDate","price":"price","order_id":"order_id", "count" : "Count", "requests": "Request",  "user_id" : "User Id", "create_time" :"Creation Time", "name" : "Name" }, ';
-    let newString = orderIDbtn.slice(0, 2) + val + orderIDbtn.slice(2);
-    console.log("New strin\n",(newString));
-    console.log("New strin\n",JSON.parse(newString));
+// app.post("/gotoexcel", (req, res) =>{
+//     console.log("Goto excel button",req.body);
+//     const { orderIDbtn } = req.body;
+//     let val = ' {"id":"Id","orderListId":"OrderListID","productId":"productId","package":"package","request_weight":"request_weight","result_weight":"result_weight","orderDate":"orderDate","price":"price","order_id":"order_id", "count" : "Count", "requests": "Request",  "user_id" : "User Id", "create_time" :"Creation Time", "name" : "Name" }, ';
+//     let newString = orderIDbtn.slice(0, 2) + val + orderIDbtn.slice(2);
+//     console.log("New strin\n",(newString));
+//     console.log("New strin\n",JSON.parse(newString));
 
-    writeToGoogleSpreadsheet(JSON.parse(newString));
-    let redirectUrl = 'https://docs.google.com/spreadsheets/d/1tsEgKRtHfZaYo13uoWNF89HIvL14Pt-01X1R69QGVMc';
-    // res.redirect(redirectUrl);
-    const linkHtml = `<a href="${redirectUrl}" target="_blank">Open Website in New Tab</a>`;
-    res.send(linkHtml);
-    let text = [ {id: "Redirected to spreedsheet"} ]
-    res.render("home", { text });
-})
+//     writeToGoogleSpreadsheet(JSON.parse(newString));
+//     let redirectUrl = 'https://docs.google.com/spreadsheets/d/1tsEgKRtHfZaYo13uoWNF89HIvL14Pt-01X1R69QGVMc';
+//     // res.redirect(redirectUrl);
+//     const linkHtml = `<a href="${redirectUrl}" target="_blank">Open Website in New Tab</a>`;
+//     res.send(linkHtml);
+//     let text = [ {id: "Redirected to spreedsheet"} ]
+//     res.render("home", { text });
+// })
 
 // Start the server
 const port = 3000;
