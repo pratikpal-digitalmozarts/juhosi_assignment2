@@ -33,8 +33,8 @@ async function writeToGoogleSpreadsheet(data) {
     });
 
     console.log('Data written to the Google Spreadsheet.');
-    const spreadsheetUrl = `https://docs.google.com/spreadsheets/d/${spreadsheetId}`;
-    open.open(spreadsheetUrl);
+    // const spreadsheetUrl = `https://docs.google.com/spreadsheets/d/${spreadsheetId}`;
+    // open.open(spreadsheetUrl);
   } catch (error) {
     console.error('Error writing to Google Spreadsheet:', error);
   }
