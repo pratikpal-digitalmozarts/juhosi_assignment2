@@ -1,7 +1,7 @@
 const express = require("express")
 const app = express()
 
-const mysql = require('mysql2')
+const mysql = require('mysql')
 const pool = mysql.createPool({
     host: "sql12.freemysqlhosting.net",
     user: "sql12629011",
