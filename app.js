@@ -146,7 +146,7 @@ app.post('/submit', (req, res) =>{
                 for(let i=0; i<result2.length; i++){
                     arr.push(result2[i]["species"]);
                 }
-                let text = [ {id : "No Available package, following packages are available ", species: arr } ];
+                let text = [ {id : "No Available package, following packages are available in Product table ", species: arr } ];
                 let result = [ {id: company, name: owner } ]
                 console.log("Text....", text);
                 res.render('customer', { result, text });
