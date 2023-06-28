@@ -180,6 +180,8 @@ app.post("/gotoexcel", (req, res) =>{
     console.log("New strin\n",JSON.parse(newString));
 
     writeToGoogleSpreadsheet(JSON.parse(newString));
+    let redirectUrl = 'https://docs.google.com/spreadsheets/d/1tsEgKRtHfZaYo13uoWNF89HIvL14Pt-01X1R69QGVMc';
+    res.redirect(redirectUrl);
     let text = [ {id: "Redirected to spreedsheet"} ]
     res.render("home", { text });
 })
