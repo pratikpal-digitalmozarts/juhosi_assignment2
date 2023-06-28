@@ -103,7 +103,7 @@ app.post('/dashboard', (req, res) => {
                 result = result2;
                 console.log("Result 2",result2);
                 console.log("result 1",result);
-                res.render('dashboard', { result, ownerName });
+                res.render('dashboard', { result });
                 return;
             })
         }
