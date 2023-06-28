@@ -1,0 +1,62 @@
+<!-- dashboard.ejs -->
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Dashboard</title>
+  <style>
+    table {
+      border-collapse: collapse;
+      width: 100%;
+    }
+
+    th, td {
+      border: 1px solid black;
+      padding: 8px;
+      text-align: left;
+    }
+
+    th {
+      background-color: #f2f2f2;
+    }
+  </style>
+</head>
+<body>
+  <h1>Welcome to the Dashboard</h1>
+  <table>
+    <thead>
+      <tr>
+        <th>Order Date</th>
+        <th>Company</th>
+        <th>Owner</th>
+        <th>Item, Product</th>
+        <th>Request_weight</th>
+        <th>Result_weight</th>
+        <th>Price</th>
+        <th>Order ID</th>
+        <th>Count</th>
+        <th>Request</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% result.forEach(user => { %>
+        <tr>
+          <td><%= user.orderDate.toLocaleDateString('en-US') %></td>
+          <td><%= user.user_id %></td>
+          <td><%= user.name %></td>
+          <td><%= user.package %></td>
+          <td><%= user.request_weight %></td>
+          <td><%= user.result_weight %></td>
+          <td><%= user.price %></td>
+          <td><%= user.order_id %></td>
+          <td><%= user.count %></td>
+          <td><%= user.requests %></td>
+        </tr>
+      <% }); %>
+    </tbody>
+  </table>
+  <form action="/gotoexcel" method="POST">
+    <input type="hidden" id="company_dashboard" name="orderIDbtn" value=" <%= JSON.stringify(result) %> "  required>
+    <button type="submit">Go to Excel</button>
+  </form>
+</body>
+</html>
