@@ -44,8 +44,7 @@
           <td><%= user.user_id %></td>
           <% if (typeof ownerName !== 'undefined') { %>
             <td><%= ownerName[0]["name"] %></td>
-          <% } %>
-          <% else { %>
+          <% } else { %>
             <td><%= user.name %></td>
           <% } %>
           <td><%= user.package %></td>
