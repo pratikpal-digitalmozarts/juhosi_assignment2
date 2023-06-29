@@ -41,6 +41,11 @@
     <input type="hidden" id="owner_dashboard" name="orderNamebtn" value=" <%= result[0].name %> "  required>
     <button type="submit">Go to Dashboard</button>
   </form>
+  <br>
+  <br>
+  <form action="/" method="GET">
+    <button type="submit">Home</button>
+  </form>
   <% if (typeof text !== 'undefined') { %>
     <h2><%= text[0].id %></h2>
     <% text[0].species.forEach(user => { %>

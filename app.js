@@ -20,24 +20,24 @@ app.get('/', (req, res) => {
 app.post('/login', (req, res) => {
   const { userId, password } = req.body;
 //   console.log(req.body)
-    const sqlQuery = "Select * from User where name='"+userId+"' and password='"+password+"'"
+    const sqlQuery = "Select * from User where id='"+userId+"' and password='"+password+"'"
     // console.log(sqlQuery)
     pool.query(sqlQuery, (err, result) => {
         console.log("error", err)
         // console.log("result", result)
         if(Object.keys(result).length > 0){
-            if(result[0]["id"] === "admin"){
-                //console.log("This is running...", result)
-                res.redirect('/dashboard');
-            }
-            else{
+            // if(result[0]["id"] === "admin"){
+            //     //console.log("This is running...", result)
+            //     res.redirect('/dashboard');
+            // }
+            // else{
                 res.render('customer', { result });
-            }
+            // }
         }
         else{ 
             res.render('home', { result });
         }
-    })
+    });
 
 });
 
