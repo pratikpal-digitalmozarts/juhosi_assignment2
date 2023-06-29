@@ -33,8 +33,10 @@ async function writeToGoogleSpreadsheet(data) {
     });
 
     console.log('Data written to the Google Spreadsheet.');
-    const spreadsheetUrl = `https://docs.google.com/spreadsheets/d/${spreadsheetId}`;
-    open.open(spreadsheetUrl);
+    // const spreadsheetUrl = `https://docs.google.com/spreadsheets/d/${spreadsheetId}`;
+    // open.open(spreadsheetUrl);
+    // var link = "https://docs.google.com/spreadsheets/d/1tsEgKRtHfZaYo13uoWNF89HIvL14Pt-01X1R69QGVMc";
+    // window.open(link);
   } catch (error) {
     console.error('Error writing to Google Spreadsheet:', error);
   }

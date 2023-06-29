@@ -27,7 +27,7 @@ app.post('/login', (req, res) => {
         // console.log("result", result)
         if(Object.keys(result).length > 0){
             if(result[0]["id"] === "admin"){
-                console.log("This is running...", result)
+                //console.log("This is running...", result)
                 res.redirect('/dashboard');
             }
             else{
@@ -59,17 +59,17 @@ app.post('/changePassword', (req, res) => {
     const query = "Select * from User where phone_number = '"+ phoneNumber + "'";
     pool.query(query, (err, result) => {
         console.log("Error", err);
-        console.log("Runningggggggg.......")
+       // console.log("Runningggggggg.......")
         if(result.length < 1){
             const text = [ {id: "No registered Phone Number in the database"} ]
             res.render('change_password', { text });
         }
         else{
-            console.log("number, password, confirmPassword  ",phoneNumber, newPassword, confirmPassword )
+           // console.log("number, password, confirmPassword  ",phoneNumber, newPassword, confirmPassword )
             const query2 = "Update User SET password = '"+ newPassword +"' where phone_number = '"+ phoneNumber + "'";
             pool.query(query2, (err2, result2) => {
                 console.log("Error", err2);
-                console.log("Result", result2);
+               // console.log("Result", result2);
                 res.render('home');
             })
         }
@@ -89,7 +89,7 @@ app.post('/dashboard', (req, res) => {
   // You can query the database using the MySQL connection pool
     let { orderIDbtn, orderNamebtn } = req.body;
     orderIDbtn = orderIDbtn.trim();
-    console.log(req.body);
+   // console.log(req.body);
     let sqlQuery = "Select * from OrderItem where user_id = "+ orderIDbtn;
     pool.query(sqlQuery, (err, result) => {
         console.log("Error in getting orderIDbtn", err);
@@ -103,12 +103,17 @@ app.post('/dashboard', (req, res) => {
                 result = result2;
                 console.log("Result 2",result2);
                 console.log("result 1",result);
-                res.render('dashboard', { result });
+                res.render('dashboard', { result, ownerName });
                 return;
             })
         }
         // console.log("The result: ",result);
         else{
+            let val = ' {"id":"Id","orderListId":"OrderListID","productId":"productId","package":"package","request_weight":"request_weight","result_weight":"result_weight","orderDate":"orderDate","price":"price","order_id":"order_id", "count" : "Count", "requests": "Request",  "user_id" : "User Id", "create_time" :"Creation Time", "name" : "Name" }, ';
+              let orderIDbtn = JSON.stringify(result);
+              let newString = orderIDbtn.slice(0, 1) + val + orderIDbtn.slice(1);
+            //  console.log("This is new String: ",newString);
+              writeToGoogleSpreadsheet(JSON.parse(newString));
             res.render('dashboard', { result, ownerName });
         }
 
@@ -131,14 +136,14 @@ app.post('/submit', (req, res) =>{
         if(result3.length < 1){
             const avaPackage = "Select species from ProductInfo";
             pool.query(avaPackage, (err2, result2) => {
-                console.log("Result2.......",result2);
+              //  console.log("Result2.......",result2);
                 let arr = [];
                 for(let i=0; i<result2.length; i++){
                     arr.push(result2[i]["species"]);
                 }
-                let text = [ {id : "No Available package, following packages are available ", species: arr } ];
+                let text = [ {id : "No Available package, following packages are available in Product table ", species: arr } ];
                 let result = [ {id: company, name: owner } ]
-                console.log("Text....", text);
+             //   console.log("Text....", text);
                 res.render('customer', { result, text });
             });
         }
@@ -148,13 +153,13 @@ app.post('/submit', (req, res) =>{
                 const order_id = result2[0]["order_id"];
                 const product_id = result2[0]["product_id"];
                 const sqlQuery = "INSERT INTO OrderItem(user_id, productId, orderDate, package,  result_weight, request_weight, order_id, count, requests, create_time) VALUES ("+ company +", "+ product_id+", '"+order_date+"','"+item+"',"+weight+","+request_for_ship+", "+ order_id+", "+ quantity+", '" + request_for_ship_real + "', NOW() )"
-                console.log("SQL QUERY...", sqlQuery);
+              //  console.log("SQL QUERY...", sqlQuery);
                 pool.query(sqlQuery, (err4, result4) => {
                     console.log("Error4....", err4);
                     console.log("Result4....", result4);
                     let text2 = [ {id: "Product ordered successfully"} ]
                     let result = [ {id: company, name: owner } ]
-                    console.log(text2);
+                //    console.log(text2);
                     res.render('customer', { result, text2 } );
                 });
 
@@ -171,18 +176,22 @@ app.post('/submit', (req, res) =>{
     // res.render('customer', { result });
 });
 
-app.post("/gotoexcel", (req, res) =>{
-    console.log("Goto excel button",req.body);
-    const { orderIDbtn } = req.body;
-    let val = ' {"id":"Id","orderListId":"OrderListID","productId":"productId","package":"package","request_weight":"request_weight","result_weight":"result_weight","orderDate":"orderDate","price":"price","order_id":"order_id", "count" : "Count", "requests": "Request",  "user_id" : "User Id", "create_time" :"Creation Time", "name" : "Name" }, ';
-    let newString = orderIDbtn.slice(0, 2) + val + orderIDbtn.slice(2);
-    console.log("New strin\n",(newString));
-    console.log("New strin\n",JSON.parse(newString));
+// app.post("/gotoexcel", (req, res) =>{
+//     console.log("Goto excel button",req.body);
+//     const { orderIDbtn } = req.body;
+//     let val = ' {"id":"Id","orderListId":"OrderListID","productId":"productId","package":"package","request_weight":"request_weight","result_weight":"result_weight","orderDate":"orderDate","price":"price","order_id":"order_id", "count" : "Count", "requests": "Request",  "user_id" : "User Id", "create_time" :"Creation Time", "name" : "Name" }, ';
+//     let newString = orderIDbtn.slice(0, 2) + val + orderIDbtn.slice(2);
+//     console.log("New strin\n",(newString));
+//     console.log("New strin\n",JSON.parse(newString));
 
-    writeToGoogleSpreadsheet(JSON.parse(newString));
-    let text = [ {id: "Redirected to spreedsheet"} ]
-    res.render("home", { text });
-})
+//     writeToGoogleSpreadsheet(JSON.parse(newString));
+//     let redirectUrl = 'https://docs.google.com/spreadsheets/d/1tsEgKRtHfZaYo13uoWNF89HIvL14Pt-01X1R69QGVMc';
+//     // res.redirect(redirectUrl);
+//     const linkHtml = `<a href="${redirectUrl}" target="_blank">Open Website in New Tab</a>`;
+//     res.send(linkHtml);
+//     let text = [ {id: "Redirected to spreedsheet"} ]
+//     res.render("home", { text });
+// })
 
 // Start the server
 const port = 3000;

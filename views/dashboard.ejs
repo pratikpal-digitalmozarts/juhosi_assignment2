@@ -42,12 +42,7 @@
         <tr>
           <td><%= user.orderDate.toLocaleDateString('en-US') %></td>
           <td><%= user.user_id %></td>
-          <% if (typeof text !== 'undefined') { %>
-            <td>ownerName[0]["name"]</td>
-          <% } %>
-          <% else { %>
-            <td><%= user.name %></td>
-          <% } %>
+          <td><%= user.name %></td>
           <td><%= user.package %></td>
           <td><%= user.request_weight %></td>
           <td><%= user.result_weight %></td>
@@ -59,9 +54,13 @@
       <% }); %>
     </tbody>
   </table>
-  <form action="/gotoexcel" method="POST">
-    <input type="hidden" id="company_dashboard" name="orderIDbtn" value=" <%= JSON.stringify(result) %> "  required>
-    <button type="submit">Go to Excel</button>
-  </form>
+  <br>
+  <br>
+  <button type="button" ><a href="https://docs.google.com/spreadsheets/d/1tsEgKRtHfZaYo13uoWNF89HIvL14Pt-01X1R69QGVMc" target="_blank" style="color: #000f1d; text-decoration: none;">Go to Excel</a></button>
+  <br>
+  <br>
+  <% if (typeof text !== 'undefined') { %>
+      <h2>All the entries of the OrderItem table is shown as the user dont have any order by this user_id (try using id: pratik )</h2>
+  <% } %>
 </body>
 </html>
