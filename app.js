@@ -108,7 +108,8 @@ app.post('/dashboard', (req, res) => {
               writeToGoogleSpreadsheet(JSON.parse(newString));
             //  console.log("Result 2",result2);
               //  console.log("result 1",result);
-                res.render('dashboard', { result });
+              let text = { id : "val" }
+                res.render('dashboard', { result, text });
                 return;
             })
         }
